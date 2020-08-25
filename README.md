@@ -1,34 +1,49 @@
 # Seibii::Http
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/seibii/http`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+[![Circle CI](https://circleci.com/gh/seibii/seibii-http.svg?style=shield)](https://circleci.com/gh/seibii/seibii-http)
+[![codecov](https://codecov.io/gh/seibii/seibii-http/branch/master/graph/badge.svg)](https://codecov.io/gh/seibii/seibii-http)
+![GitHub](https://img.shields.io/github/license/seibii/seibii-http.svg)
 
 ## Installation
-
-Add this line to your application's Gemfile:
 
 ```ruby
 gem 'seibii-http'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install seibii-http
-
 ## Usage
 
-TODO: Write usage instructions here
+### Base client
+```ruby
+def get
+  Seibii::Http::Clients::Base.new(logger: ->() { |log| Rails.logger.debug(log) })
+    .request(method: :get, uri: URI.parse('https://example.com/example'), request_body: nil, headers: { Accept: '*/*' })
+    #=> response body String
+rescue Seibii::Http::ClientError => e
+  p e
+  p e.response.status #=> 400..499
+  p e.response.body
+rescue Seibii::Http::ServerError => e
+  p e
+  p e.response.status #=> 500..599
+  p e.response.body
+end
+```
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+### Json client
+```ruby
+def post
+  Seibii::Http::Clients::Json.new(logger: ->() { |log| Rails.logger.debug(log) })
+    .request(method: :post, uri: URI.parse('https://example.com/example'), params: { a: 'b', c: 'd' }, headers: { Authorization: 'Bearer token' })
+    #=> response json hash
+rescue Seibii::Http::ClientError => e
+  p e
+  p e.response.status #=> 400..499
+  p e.response.body
+rescue Seibii::Http::ServerError => e
+  p e
+  p e.response.status #=> 500..599
+  p e.response.body
+end
+```
 
 ## Contributing
 
