@@ -34,6 +34,9 @@ end
 ```
 
 ### Json client
+- `{ Content-Type: 'application/json`, Accept: 'application/json'}` headers will be added.
+- You can use hash to make request parameters and receive response
+
 ```ruby
 def post
   Seibii::Http::Clients::Json
