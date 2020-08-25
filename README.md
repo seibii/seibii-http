@@ -14,10 +14,15 @@ gem 'seibii-http'
 ### Base client
 ```ruby
 def get
-  Seibii::Http::Clients::Base.new(logger: ->() { |log| Rails.logger.debug(log) })
-    .request(method: :get, uri: URI.parse('https://example.com/example'), request_body: nil, headers: { Accept: '*/*' })
-    #=> response body String
-rescue Seibii::Http::ClientError => e
+  Seibii::Http::Clients::Base
+    .new(logger: ->() { |log| Rails.logger.debug(log) }) # logger is optional
+    .request(
+       method: :get, # required
+       uri: URI.parse('https://example.com/example'), # required
+       request_body: nil, # optional
+       headers: { Accept: '*/*' } # optional
+    ) #=> response body String
+rescue Seibii::Http::ClientError => e # 404 will not raise exception but just return nil response
   p e
   p e.response.status #=> 400..499
   p e.response.body
@@ -31,12 +36,17 @@ end
 ### Json client
 ```ruby
 def post
-  Seibii::Http::Clients::Json.new(logger: ->() { |log| Rails.logger.debug(log) })
-    .request(method: :post, uri: URI.parse('https://example.com/example'), params: { a: 'b', c: 'd' }, headers: { Authorization: 'Bearer token' })
-    #=> response json hash
-rescue Seibii::Http::ClientError => e
+  Seibii::Http::Clients::Json
+    .new(logger: ->() { |log| Rails.logger.debug(log) }) # logger is optional
+    .request(
+       method: :post, # required
+       uri: URI.parse('https://example.com/example'), # required
+       params: { a: 'b', c: 'd' }, # optional
+       headers: { Authorization: 'Bearer token' } # optional
+    ) #=> response json hash
+rescue Seibii::Http::ClientError => e # 404 will not raise exception but just return nil response
   p e
-  p e.response.status #=> 400..499
+  p e.response.status #=> 400..499 
   p e.response.body
 rescue Seibii::Http::ServerError => e
   p e
