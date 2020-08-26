@@ -9,7 +9,8 @@ module Seibii
         end
 
         def request(method:, uri:, request_body: nil, headers: {})
-          with_logging(uri) { http(uri).request(request_object(method, uri, request_body, headers)) }
+          parsed_uri = URI.parse(uri)
+          with_logging(uri) { http(parsed_uri).request(request_object(method, parsed_uri, request_body, headers)) }
             .yield_self { |response| handle_http_status(response) }
         end
 

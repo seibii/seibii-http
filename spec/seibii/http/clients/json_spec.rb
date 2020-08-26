@@ -4,7 +4,7 @@ RSpec.describe Seibii::Http::Clients::Json do
   describe '#request' do
     let(:headers) { { 'Accept' => '*/*', 'X-ORIGINAL-HEADER' => 'value' } }
     let(:params) { { param1: 'value1', param2: 222 } }
-    let(:uri) { URI.parse('https://example.com/example') }
+    let(:uri) { 'https://example.com/example' }
     let(:response) { double(:response) }
     let(:code) { 200 }
 
