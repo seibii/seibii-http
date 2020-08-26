@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    seibii-http (0.1.0)
+    seibii-http (1.0.0)
       oj
 
 GEM
