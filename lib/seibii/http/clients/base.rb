@@ -52,8 +52,8 @@ module Seibii
         def handle_http_status(response)
           case response.code.to_i
           when 404 then nil
-          when 400..499 then raise ClientError, response
-          when 500..599 then raise ServerError, response
+          when 400..499 then raise ClientError, response.body
+          when 500..599 then raise ServerError, response.body
           else response.body
           end
         end
