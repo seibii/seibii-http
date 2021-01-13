@@ -20,7 +20,8 @@ def get
        method: :get, # required
        uri: URI.parse('https://example.com/example'), # required
        request_body: nil, # optional
-       headers: { Accept: '*/*' } # optional
+       headers: { Accept: '*/*' }, # optional
+       need_verify_cert: false # optional
     ) #=> response body String
 rescue Seibii::Http::ClientError => e # 404 will not raise exception but just return nil response
   p e
@@ -45,7 +46,8 @@ def post
        method: :post, # required
        uri: URI.parse('https://example.com/example'), # required
        params: { a: 'b', c: 'd' }, # optional
-       headers: { Authorization: 'Bearer token' } # optional
+       headers: { Authorization: 'Bearer token' }, # optional
+       need_verify_cert: false # optional
     ) #=> response json hash
 rescue Seibii::Http::ClientError => e # 404 will not raise exception but just return nil response
   p e
