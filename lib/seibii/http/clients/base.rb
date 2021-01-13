@@ -8,18 +8,18 @@ module Seibii
           @logger = logger
         end
 
-        def request(method:, uri:, request_body: nil, headers: {})
+        def request(method:, uri:, request_body: nil, headers: {}, need_verify_cert: false)
           parsed_uri = URI.parse(uri)
-          with_logging(uri) { http(parsed_uri).request(request_object(method, parsed_uri, request_body, headers)) }
+          with_logging(uri) { http(parsed_uri, need_verify_cert).request(request_object(method, parsed_uri, request_body, headers)) } # rubocop:disable Layout/LineLength
             .yield_self { |response| handle_http_status(response) }
         end
 
         private
 
-        def http(uri)
+        def http(uri, need_verify_cert)
           @http ||= Net::HTTP.new(uri.host, uri.port).tap do |instance|
             instance.use_ssl = uri.scheme == 'https'
-            instance.verify_mode = OpenSSL::SSL::VERIFY_NONE
+            instance.verify_mode = need_verify_cert ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE
           end
         end
 
