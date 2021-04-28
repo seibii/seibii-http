@@ -1,0 +1,17 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 20
+  reviewers:
+  - avexbesuke
+  - amatotsuji
+  - yuta-sanada0089
+  ignore:
+  - dependency-name: codecov
+    versions:
+    - ">= 0.2.14.a, < 0.2.15"
