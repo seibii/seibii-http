@@ -19,6 +19,8 @@ def get
     .request(
        method: :get, # required
        uri: URI.parse('https://example.com/example'), # required
+       read_timeout: 5, # optional, default set 60
+       write_timeout: 60, # optional, default set 60
        request_body: nil, # optional
        headers: { Accept: '*/*' }, # optional
        need_verify_cert: false # optional
@@ -45,6 +47,8 @@ def post
     .request(
        method: :post, # required
        uri: URI.parse('https://example.com/example'), # required
+       read_timeout: 60, # optional, default set 60
+       write_timeout: 5, # optional, default set 60
        params: { a: 'b', c: 'd' }, # optional
        headers: { Authorization: 'Bearer token' }, # optional
        need_verify_cert: false # optional

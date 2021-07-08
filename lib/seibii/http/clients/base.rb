@@ -8,9 +8,12 @@ module Seibii
           @logger = logger
         end
 
-        def request(method:, uri:, request_body: nil, headers: {}, need_verify_cert: false)
+        def request(method:, uri:, read_timeout: 60, write_timeout: 60, request_body: nil, headers: {}, need_verify_cert: false) # rubocop:disable Metrics/ParameterLists, Layout/LineLength
           parsed_uri = URI.parse(uri)
-          with_logging(uri) { http(parsed_uri, need_verify_cert).request(request_object(method, parsed_uri, request_body, headers)) } # rubocop:disable Layout/LineLength
+          http = http(parsed_uri, need_verify_cert)
+          http.read_timeout = read_timeout
+          http.write_timeout = write_timeout
+          with_logging(uri) { http.request(request_object(method, parsed_uri, request_body, headers)) }
             .yield_self { |response| handle_http_status(response) }
         end
 
