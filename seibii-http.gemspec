@@ -5,8 +5,8 @@ require 'seibii/http/version'
 Gem::Specification.new do |spec|
   spec.name          = 'seibii-http'
   spec.version       = Seibii::Http::VERSION
-  spec.authors       = ['Yuji Ueki']
-  spec.email         = ['unhappychoice@gmail.com']
+  spec.authors       = ['Seibii']
+  spec.email         = ['seibii.it@seibii.com']
 
   spec.summary       = 'Internal HTTP client for seibii services'
   spec.description   = 'Internal HTTP client for seibii services'
