@@ -12,7 +12,7 @@ module Seibii
           response_body = @base.request(
             method: method,
             uri: uri,
-            request_body: params&.yield_self { |p| Oj.dump(p, mode: :compat) },
+            request_body: params&.then { |p| Oj.dump(p, mode: :compat) },
             headers: headers.merge(Accept: 'application/json', 'Content-Type': 'application/json'),
             need_verify_cert: need_verify_cert,
             read_timeout: read_timeout,

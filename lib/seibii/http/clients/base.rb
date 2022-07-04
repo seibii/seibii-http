@@ -14,7 +14,7 @@ module Seibii
           http.read_timeout = read_timeout
           http.write_timeout = write_timeout
           with_logging(uri) { http.request(request_object(method, parsed_uri, request_body, headers)) }
-            .yield_self { |response| handle_http_status(response) }
+            .then { |response| handle_http_status(response) }
         end
 
         private
